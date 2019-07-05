@@ -1,0 +1,256 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="人工智能 geek 极客 阅读 电影"><title>tmux介绍和使用 | Light</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/normalize/8.0.1/normalize.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//lib.baomitu.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//lib.baomitu.com/jquery/3.3.1/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">tmux介绍和使用</h1><a id="logo" href="/.">Light</a><p class="description">在这座城，等一个人</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/message/"><i class="fa fa-comments"> 留言</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">tmux介绍和使用</h1><div class="post-meta">Jul 5, 2019<span> | </span><span class="category"><a href="/categories/基础技能/">基础技能</a></span></div><div class="clear"><div class="toc-article" id="toc"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#tmux介绍"><span class="toc-number">1.</span> <span class="toc-text">tmux介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tmux的编译安装"><span class="toc-number">2.</span> <span class="toc-text">tmux的编译安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tmux的几个概念"><span class="toc-number">3.</span> <span class="toc-text">tmux的几个概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tmux的简单使用"><span class="toc-number">4.</span> <span class="toc-text">tmux的简单使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#新建Session"><span class="toc-number">4.1.</span> <span class="toc-text">新建Session</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attach到已有的Session"><span class="toc-number">4.2.</span> <span class="toc-text">attach到已有的Session</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#detach所在Session"><span class="toc-number">4.3.</span> <span class="toc-text">detach所在Session</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看存在的Session"><span class="toc-number">4.4.</span> <span class="toc-text">查看存在的Session</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关闭Session"><span class="toc-number">4.5.</span> <span class="toc-text">关闭Session</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tmux的快捷键"><span class="toc-number">5.</span> <span class="toc-text">tmux的快捷键</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常用快捷键"><span class="toc-number">5.1.</span> <span class="toc-text">常用快捷键</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见问题"><span class="toc-number">6.</span> <span class="toc-text">常见问题</span></a></li></ol></div></div><div class="post-content"><h2 id="tmux介绍"><a href="#tmux介绍" class="headerlink" title="tmux介绍"></a>tmux介绍</h2><p>tmux是一个终端复用程序，采用C/S架构模型，最有用的使用场景是我们使用ssh连接到服务器进行工作时，如果我们想要暂时离开我们的工作，并且想要保存我们的工作现场以便以后能够继续，我们就可以在tmux里面进行工作，然后想要暂停工作后就detach回话，以后想要继续工作直接attach到我们以前的工作回话即可。当网络环境不稳定的时候，我们的ssh链接很可能非正常中断，这时候如果我们使用的是普通的ssh工作环境，我们的工作就会被丢弃掉，但是使用tmux就可以恢复并继续工作。</p>
+<h2 id="tmux的编译安装"><a href="#tmux的编译安装" class="headerlink" title="tmux的编译安装"></a>tmux的编译安装</h2><p>建议安装最新版本的tmux，享受最新的tmux性能和使用便捷性。安装最新的tmux需要以下几步：</p>
+<ol>
+<li><a href="https://github.com/tmux/tmux/releases" target="_blank" rel="noopener">下载</a>最新发布的tarball.</li>
+<li>使用tar命令解压缩；</li>
+<li><p>进入解压缩文件夹，执行以下命令：</p>
+ <figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure &amp;&amp; <span class="built_in">make</span></span><br><span class="line">sudo <span class="built_in">make</span> install</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果出现找不到libevent的错误，ubuntu16.04直接apt安装libevent-dev包再编译安装即可。</p>
+</li>
+</ol>
+<p>tmux的<a href="https://github.com/tmux/tmux" target="_blank" rel="noopener">github</a>页面还介绍了另外一种安装方法，但是没有尝试过。</p>
+<h2 id="tmux的几个概念"><a href="#tmux的几个概念" class="headerlink" title="tmux的几个概念"></a>tmux的几个概念</h2><ol>
+<li>Server：tmux是基于C/S架构的，也就是我们的工作需要有Server，然后Client通过Session和Server进行通信和工作;</li>
+<li>Session：一个Server可以包含多个Session；</li>
+<li>Window：一个Session可以包含多个Window；</li>
+<li>Pane：一个Window可以包含多个Pane。</li>
+</ol>
+<p>注意，我们可以对一个Session同时attach多次，attach到同一个Session后输入和显示是完全一模一样的，这就可以用于给别人进行演示操作了。</p>
+<p><img src="78deb3835bc542a292f1b185e4461b4f.png" alt="982a2814bd2c89d62b716e719420286f.png"></p>
+<h2 id="tmux的简单使用"><a href="#tmux的简单使用" class="headerlink" title="tmux的简单使用"></a>tmux的简单使用</h2><h3 id="新建Session"><a href="#新建Session" class="headerlink" title="新建Session"></a>新建Session</h3><p>直接在终端执行<code>tmux</code>可以启动一个默认以数字命名的Session，但是通常我们可能需要给我们的Session命名，这样便于我们进行后期的attach：<br><figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux <span class="keyword">new</span> <span class="type"></span>-s session_name</span><br></pre></td></tr></table></figure></p>
+<h3 id="attach到已有的Session"><a href="#attach到已有的Session" class="headerlink" title="attach到已有的Session"></a>attach到已有的Session</h3><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmux <span class="keyword">a</span> <span class="comment"># 默认进入第一个会话</span></span><br><span class="line">tmux <span class="keyword">a</span> -t demo <span class="comment"># 进入到名称为demo的会话</span></span><br></pre></td></tr></table></figure>
+<h3 id="detach所在Session"><a href="#detach所在Session" class="headerlink" title="detach所在Session"></a>detach所在Session</h3><p>有两种方式：</p>
+<ol>
+<li>快捷键<code>Ctrl+b</code>,释放后按<code>d</code>即可；</li>
+<li>执行命令<code>tmux detach</code>。</li>
+</ol>
+<h3 id="查看存在的Session"><a href="#查看存在的Session" class="headerlink" title="查看存在的Session"></a>查看存在的Session</h3><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">tmux ls</span></span><br></pre></td></tr></table></figure>
+<h3 id="关闭Session"><a href="#关闭Session" class="headerlink" title="关闭Session"></a>关闭Session</h3><p>关闭Session后，工作现场内容会丢失，但是会释放相关的资源：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmux <span class="keyword">kill</span>-<span class="keyword">session</span> -t demo <span class="comment"># 关闭demo会话</span></span><br><span class="line">tmux <span class="keyword">kill</span>-<span class="keyword">server</span> <span class="comment"># 关闭服务器，所有的会话都将关闭</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="tmux的快捷键"><a href="#tmux的快捷键" class="headerlink" title="tmux的快捷键"></a>tmux的快捷键</h2><p>tmux的快捷键遵循prefix+功能按键的模式，这个不常见。也就是我们在使用快捷键之前需要使用prefix按键告诉tmux我们要使用快捷键了，默认的prefix按键是<code>CTRL+b</code>,要使用快捷键，比如我们要水平分屏，那么我们应该先按<code>CTRL+b</code>,释放按键后按<code>%</code>即可（切记要释放按键后再按<code>%</code>）.</p>
+<h3 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h3><p>表一：系统指令。</p>
+<table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>?</code></td>
+<td>显示快捷键帮助文档</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>d</code></td>
+<td>断开当前会话</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>D</code></td>
+<td>选择要断开的会话</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>Ctrl+z</code></td>
+<td>挂起当前会话</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>r</code></td>
+<td>强制重载当前会话</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>s</code></td>
+<td>显示会话列表用于选择并切换</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>:</code></td>
+<td>进入命令行模式，此时可直接输入<code>ls</code>等命令</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>[</code></td>
+<td>进入复制模式，按<code>q</code>退出</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>]</code></td>
+<td>粘贴复制模式中复制的文本</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>~</code></td>
+<td>列出提示信息缓存</td>
+</tr>
+</tbody>
+</table>
+<p>表二：窗口（window）指令。</p>
+<table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>c</code></td>
+<td>新建窗口</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>&amp;</code></td>
+<td>关闭当前窗口（关闭前需输入<code>y</code> or <code>n</code>确认）</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>0~9</code></td>
+<td>切换到指定窗口</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>p</code></td>
+<td>切换到上一窗口</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>n</code></td>
+<td>切换到下一窗口</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>w</code></td>
+<td>打开窗口列表，用于且切换窗口</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>,</code></td>
+<td>重命名当前窗口</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>.</code></td>
+<td>修改当前窗口编号（适用于窗口重新排序）</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>f</code></td>
+<td>快速定位到窗口（输入关键字匹配窗口名称）</td>
+</tr>
+</tbody>
+</table>
+<p>表三：面板（pane）指令。</p>
+<table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>&quot;</code></td>
+<td>当前面板上下一分为二，下侧新建面板</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>%</code></td>
+<td>当前面板左右一分为二，右侧新建面板</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>x</code></td>
+<td>关闭当前面板（关闭前需输入<code>y</code> or <code>n</code>确认）</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>z</code></td>
+<td>最大化当前面板，再重复一次按键后恢复正常（v1.8版本新增）</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>!</code></td>
+<td>将当前面板移动到新的窗口打开（原窗口中存在两个及以上面板有效）</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>;</code></td>
+<td>切换到最后一次使用的面板</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>q</code></td>
+<td>显示面板编号，在编号消失前输入对应的数字可切换到相应的面板</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>{</code></td>
+<td>向前置换当前面板</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>}</code></td>
+<td>向后置换当前面板</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>Ctrl+o</code></td>
+<td>顺时针旋转当前窗口中的所有面板</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>方向键</code></td>
+<td>移动光标切换面板</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>o</code></td>
+<td>选择下一面板</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>空格键</code></td>
+<td>在自带的面板布局中循环切换</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>Alt+方向键</code></td>
+<td>以5个单元格为单位调整当前面板边缘</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>Ctrl+方向键</code></td>
+<td>以1个单元格为单位调整当前面板边缘（Mac下被系统快捷键覆盖）</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td><code>t</code></td>
+<td>显示时钟</td>
+</tr>
+</tbody>
+</table>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><ol>
+<li>主机异常断电后执行命令<code>tmux ls</code>报错<code>error connecting to /tmp/tmux-1001/default (No such file or directory)</code><br>解决办法：先执行命令<code>tmux a</code>然后执行命令<code>pkill -USR1 tmux</code>使得tmux重新创建socket即可。</li>
+</ol>
+</div><div class="tags"><a href="/tags/技巧锦集/">技巧锦集</a></div><div class="post-nav"><a class="next" href="/2019/07/03/python面向对象编程/">python面向对象编程</a></div><div id="lv-container" data-id="city" data-uid="MTAyMC80MjMxNi8xODg2Mw"><script>(function(d, s) {
+   var j, e = d.getElementsByTagName(s)[0];
+   if (typeof LivereTower === 'function') { return; }
+   j = d.createElement(s);
+   j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+   j.async = true;
+   e.parentNode.insertBefore(j, e);
+})(document, 'script');
+</script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" target="_blank"><input type="search" name="word" maxlength="20" placeholder="Search"><input type="hidden" name="si" value="https://lightzhan.github.io"><input name="tn" type="hidden" value="bds"><input name="cl" type="hidden" value="3"><input name="ct" type="hidden" value="2097152"><input name="s" type="hidden" value="on"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/基础技能/">基础技能</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习笔记/">学习笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/知识交流/">知识交流</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程技能/">编程技能</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/强化学习/" style="font-size: 15px;">强化学习</a> <a href="/tags/论文阅读/" style="font-size: 15px;">论文阅读</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/计算机网络/" style="font-size: 15px;">计算机网络</a> <a href="/tags/技巧锦集/" style="font-size: 15px;">技巧锦集</a> <a href="/tags/机器学习/" style="font-size: 15px;">机器学习</a> <a href="/tags/tensorflow/" style="font-size: 15px;">tensorflow</a> <a href="/tags/环境配置/" style="font-size: 15px;">环境配置</a> <a href="/tags/计算机/" style="font-size: 15px;">计算机</a> <a href="/tags/概率统计/" style="font-size: 15px;">概率统计</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/07/05/tmux介绍和使用/">tmux介绍和使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/03/python面向对象编程/">python面向对象编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/28/ssh隧道代理/">ssh隧道代理</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/15/python基础语法扫盲-python2-0/">python基础语法扫盲(python2.0+)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/13/Collaborative-Evolutionary-Reinforcement-Learning/">Collaborative Evolutionary Reinforcement Learning</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/01/PPO算法/">PPO算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/30/ACER算法笔记整理/">Sample Efficient Actor-Critic With Experience Replay</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/29/Python变量-引用-对象/">Python变量=引用->对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/26/tensorflow的custom-getter/">tensorflow的custom_getter</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/15/Prioritized-Experience-Replay/">Prioritized Experience Replay</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://github.com/lightzhan/" title="My github" target="_blank">My github</a><ul></ul><a href="https://Mr-solution.github.io/Notes" title="Mr-solution" target="_blank">Mr-solution</a><ul></ul><a href="https://kchu.github.io/" title="飞语流年" target="_blank">飞语流年</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">Light.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.2/jquery.fancybox.min.css"><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+  });
+</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" async></script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
